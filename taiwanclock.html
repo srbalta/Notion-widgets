@@ -1,176 +1,74 @@
-<!-- original : https://codepen.io/SeanNorton/pen/LWBXQL -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
+    <title>Clock & Countdown Widget</title>
+    <link href="https://fonts.googleapis.com/css?family=Lobster|Roboto:400,700" rel="stylesheet">
     <style>
-
-        /*CSS RESETS*/
-
-body{
-    background-color: #fff;
-    line-height: 1.6;
-
-}
-
-h1 {
-    margin-top: 0;
-}
-
-
-/*CSS START*/
-
-.full-table {
-    display: table;
-    height: 100%;
-    width: 100%;
-}
-
-.table-cell {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-}
-
-.card {
-    padding: 10px 25px 10px 25px;
-    border-radius: 10px;
-    background: #009688;
-    color: #fff;
-    display: inline-block;
-    box-shadow: 2px 2px 1px 0px #295C7B;
-}
-
-.card:hover {
-    margin-top: 2px;
-    box-shadow: none;
-}
-
-.clock {
-    display: inline-block;
-    font-family: 'Roboto', sans-serif;
-    font-weight: bold;
-    font-size: 1.2em;
-    /* padding-left: 20px; */
-}
-
-.time {
-    display: inline-block;
-    min-width: 37px;
-}
-
-.colon {
-    font-size: 1.1em;
-    display: inline-block;
-}
-
-.date {
-    display: block;
-    min-width: 162px;
-    /* padding-right: 30px; */
-    /* border-right: 2px solid #295C7B; */
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.2em;
-}
-.greet{
-    
-    min-width: 162px;
-    /* padding-right: 30px; */
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.2em;
-}
-
+        :root {
+            --background-color: #009688;
+            --text-color: #fff;
+        }
+        body { background-color: #fff; line-height: 1.6; margin: 0; padding: 0; }
+        h1 { margin-top: 0; }
+        .flag { font-size: 2em; margin-bottom: 5px; }
+        .full-table { display: table; height: 100vh; width: 100%; }
+        .table-cell { display: table-cell; vertical-align: middle; text-align: center; }
+        .card { padding: 10px 25px; border-radius: 10px; background: var(--background-color); color: var(--text-color); display: inline-block; box-shadow: 2px 2px 1px 0px #295C7B; }
+        .card:hover { margin-top: 2px; box-shadow: none; }
+        .clock { display: inline-block; font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 1.2em; }
+        .time { display: inline-block; min-width: 37px; }
+        .colon { font-size: 1.1em; display: inline-block; }
+        .date { display: block; min-width: 162px; font-family: 'Roboto', sans-serif; font-size: 1.2em; }
+        .greet { min-width: 162px; font-family: 'Roboto', sans-serif; font-size: 1.2em; }
+        .countdown { font-family: 'Roboto', sans-serif; font-size: 0.9em; margin-top: 10px; opacity: 0.9; }
     </style>
 </head>
 <body>
-    <link href="https://fonts.googleapis.com/css?family=Lobster|Roboto:400,700" rel="stylesheet">
-
-<div class="full-table">
-  <div class="table-cell">
-    
-    <div class="card">
-        <div class="greet" id="greet"></div>
-      <div class="date" id="date"></div>
-      <div class="clock">
-        <div class="time" id="hour"></div>
-        <div class="colon">:</div>
-        <div class="time" id="min"></div>
-        <div class="colon">:</div>
-        <div class="time" id="sec"></div>
-      </div>
+    <div class="full-table">
+        <div class="table-cell">
+            <div class="card">
+                <div class="flag" id="flag"></div>
+                <div class="greet" id="greet"></div>
+                <div class="clock">
+                    <span class="time" id="hour"></span><span class="colon">:</span><span class="time" id="min"></span><span class="colon">:</span><span class="time" id="sec"></span>
+                </div>
+                <div class="date" id="date"></div>
+                <div class="countdown" id="countdown"></div>
+            </div>
+        </div>
     </div>
-    
-  </div>
-</div>
-
-<script>
-// CHANGE THIS LINE TO SWITCH TIMEZONES
-const TIMEZONE = 'Asia/Taipei';  // Taiwan time
-
-function date() {
-var today = new Date();
-var options = { timeZone: TIMEZONE, weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-document.getElementById('date').innerHTML = today.toLocaleDateString('en-US', options);
-}
-
-
-function clock() {
-var today = new Date();
-// Get time components in specified timezone
-var hour = parseInt(today.toLocaleString('en-US', { timeZone: TIMEZONE, hour: 'numeric', hour12: false }));
-var minutes = parseInt(today.toLocaleString('en-US', { timeZone: TIMEZONE, minute: 'numeric' }));
-var seconds = parseInt(today.toLocaleString('en-US', { timeZone: TIMEZONE, second: 'numeric' }));
-var hourDisplay = zeros(twelveHour(hour));
-var minutesDisplay = zeros(minutes);
-var secondsDisplay = zeros(seconds);
-if(hour >= 12){
-    secondsDisplay += " pm"
-}
-else{
-    secondsDisplay += " am"
-}
-hrs = hour;
-if (hrs < 12)
-        greet = 'Good Morning  ';
-    else if (hrs >= 12 && hrs <= 17)
-        greet = 'Good Afternoon ';
-    else if (hrs >= 17 && hrs <= 24)
-        greet = 'Good Evening  ';
-document.getElementById('greet').innerHTML = greet;
-document.getElementById('hour').innerHTML = hourDisplay;
-document.getElementById('min').innerHTML = minutesDisplay;
-document.getElementById('sec').innerHTML = secondsDisplay;
-}
-
-function twelveHour(hour) {
-if (hour > 12) {
-    return hour -= 12 
-} else if (hour === 0) {
-    return hour = 12;
-} else {
-    return hour
-}
-}
-// adds zero infront of single digit number
-function zeros(num) {
-if (num < 10) {
-    num = '0' + num
-};
-return num;
-}
-
-function dateTime() {
-date();
-clock();
-setTimeout(dateTime, 500);
-}
-
-dateTime()
-// END
-</script>
-
+    <script>
+        flag = '🇩🇰';
+        greet = 'Hello Gabriel';
+        targetDate = new Date('2026-02-26T00:00:00');
+        document.getElementById('flag').innerText = flag;
+        document.getElementById('greet').innerText = greet;
+        if (!flag) { document.getElementById('flag').style.display = 'none'; }
+        function updateClock() {
+            var date = new Date();
+            var hour = date.getHours(), min = date.getMinutes(), sec = date.getSeconds();
+            hour = (hour < 10) ? "0" + hour : hour;
+            min = (min < 10) ? "0" + min : min;
+            sec = (sec < 10) ? "0" + sec : sec;
+            document.getElementById('hour').innerText = hour;
+            document.getElementById('min').innerText = min;
+            document.getElementById('sec').innerText = sec;
+            var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            var day = days[date.getDay()], month = months[date.getMonth()], dateNum = date.getDate(), year = date.getFullYear();
+            document.getElementById('date').innerText = day + ', ' + month + ' ' + dateNum + ', ' + year;
+            var now = new Date().getTime(), distance = targetDate - now;
+            if (distance > 0) {
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById('countdown').innerText = days + ' days, ' + hours + ' hours, ' + minutes + ' minutes until Feb 26, 2026';
+            } else { document.getElementById('countdown').innerText = 'Target date reached!'; }
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
 </body>
 </html>
