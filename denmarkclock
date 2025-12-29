@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock Widget</title>
+    <link href="https://fonts.googleapis.com/css?family=Lobster|Roboto:400,700" rel="stylesheet">
+    <style>
+        :root {
+            --background-color: #F44336;
+            --text-color: #fff;
+        }
+        body { background-color: #fff; line-height: 1.6; margin: 0; padding: 0; }
+        .full-table { display: table; height: 100vh; width: 100%; }
+        .table-cell { display: table-cell; vertical-align: middle; text-align: center; }
+        .card { padding: 10px 25px; border-radius: 10px; background: var(--background-color); color: var(--text-color); display: inline-block; box-shadow: 2px 2px 1px 0px #295C7B; }
+        .card:hover { margin-top: 2px; box-shadow: none; }
+        .clock { display: inline-block; font-family: 'Roboto', sans-serif; font-weight: bold; font-size: 1.2em; }
+        .time { display: inline-block; min-width: 37px; }
+        .colon { font-size: 1.1em; display: inline-block; }
+        .date { display: block; min-width: 162px; font-family: 'Roboto', sans-serif; font-size: 1.2em; margin-top: 5px; }
+        .greet { min-width: 162px; font-family: 'Roboto', sans-serif; font-size: 1.2em; margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+    <div class="full-table">
+        <div class="table-cell">
+            <div class="card">
+                <div class="greet" id="greet"></div>
+                <div class="clock">
+                    <span class="time" id="hour"></span><span class="colon">:</span><span class="time" id="min"></span><span class="colon">:</span><span class="time" id="sec"></span>
+                </div>
+                <div class="date" id="date"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        greet = 'Copenhagen';
+        timezone = 'Europe/Copenhagen';
+        document.getElementById('greet').innerText = greet;
+        function updateClock() {
+            var date = new Date();
+            var options = { timeZone: timezone, hour12: false };
+            var hour = date.toLocaleString('en-US', { ...options, hour: '2-digit' });
+            var min = date.toLocaleString('en-US', { ...options, minute: '2-digit' });
+            var sec = date.toLocaleString('en-US', { ...options, second: '2-digit' });
+            document.getElementById('hour').innerText = hour;
+            document.getElementById('min').innerText = min;
+            document.getElementById('sec').innerText = sec;
+            var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            var localDate = new Date(date.toLocaleString('en-US', { timeZone: timezone }));
+            var day = days[localDate.getDay()], month = months[localDate.getMonth()], dateNum = localDate.getDate(), year = localDate.getFullYear();
+            document.getElementById('date').innerText = day + ', ' + month + ' ' + dateNum + ', ' + year;
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>
