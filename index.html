@@ -3,9 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato|Montserrat:900">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Montserrat:900">
 <title>Countdown Timer</title>
 <style>
+
+/* ========== EASY COLOR CUSTOMIZATION ========== */
+:root {
+    --days-bg: #EF2F3C;        /* Days background color */
+    --days-text: #183059;      /* Days number color */
+    
+    --hours-bg: #eeeeee;       /* Hours background color */
+    --hours-text: #183059;     /* Hours number color */
+    
+    --minutes-bg: #276FBF;     /* Minutes background color */
+    --minutes-text: #183059;   /* Minutes number color */
+    
+    --seconds-bg: #F0A202;     /* Seconds background color */
+    --seconds-text: #183059;   /* Seconds number color */
+}
+/* ============================================== */
 
 body{
 background-color: white;
@@ -28,54 +44,29 @@ border-radius: 5px;
 }
 
 .days {
-background: #EF2F3C;
+background: var(--days-bg);
+color: var(--days-text);
 }
 
 .hours {
-background: #eeeeee;
-color: #183059;
+background: var(--hours-bg);
+color: var(--hours-text);
 }
 
 .minutes {
-background: #276FBF;
+background: var(--minutes-bg);
+color: var(--minutes-text);
 }
 
 .seconds {
-background: #F0A202;
+background: var(--seconds-bg);
+color: var(--seconds-text);
 }
 
 .numbers {
 font-family: 'Montserrat', sans-serif;
-color:  #183059;
 font-size: 4em;
 text-align: center;
-}
-
-.white {
-position: absolute;
-background:  #eeeeee;
-height: 85px;
-width: 75px;
-left: 30%;
-top: 2%;
-}
-
-.red {
-position: absolute;
-background:  #EF2F3C;
-left: 18%;
-top: 9%;
-height: 65px;
-width: 70px;
-}
-
-.blue {
-position: absolute;
-background:  #276FBF;
-height: 80px;
-width: 80px;
-left: 60%;
-top: 5%;
 }
 
 /* Progress Bar Styles */
@@ -92,7 +83,7 @@ box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 
 .progress-fill {
 height: 100%;
-background: linear-gradient(90deg, #EF2F3C 0%, #F0A202 50%, #276FBF 100%);
+background: linear-gradient(90deg, var(--days-bg) 0%, var(--seconds-bg) 50%, var(--minutes-bg) 100%);
 width: 0%;
 transition: width 0.5s ease;
 border-radius: 15px;
@@ -136,7 +127,7 @@ letter-spacing: 2px;
 <script>
 // ========== CUSTOMIZE YOUR COUNTDOWN HERE ========== //
 const targetDate = 'Feb 23, 2026 00:00:00';  // Your target date
-const startDate = 'Dec 29, 2025 00:00:00';   // Start date for progress bar
+const startDate = 'Sep 09, 2025 00:00:00';   // Start date for progress bar
 // =================================================== //
 
 const myDate = new Date(targetDate);
